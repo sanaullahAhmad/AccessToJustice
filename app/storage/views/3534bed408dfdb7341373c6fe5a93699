@@ -1,0 +1,111 @@
+<?php $__env->startSection('flash_messages'); ?>
+	<?php if(Session::has('message')): ?>
+	<p class="alert <?php echo Session::get('alert-class', 'alert-info'); ?>"><?php echo Session::get('message'); ?></p>
+	<?php endif; ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content_options'); ?>
+
+	<div >
+		<div class="heading pull-left" ><h3> <?php echo e($data['heading']); ?> </h3></div>
+		<div class="pull-right" style="padding-top:15px;">
+			<a class="btn btn-default" href="<?php echo URL::route($data['create_link']); ?>">Add <?php echo $data['heading']; ?></a>
+			<?php if($data['has_reports']): ?>
+				<div class="btn-group">
+					<button id="summary-btn" class="btn btn-default" data-url="<?php echo e($data['create_link']); ?>">Detail Summary</button>
+					<button id="reports-btn" class="btn btn-default" data-url="<?php echo e($data['create_link']); ?>">Reports</button>
+				</div>
+			<?php endif; ?>
+		</div>
+	</div>
+	
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+	
+	<?php if($data['has_reports']): ?>
+		<div style="float:right;margin-bottom:5px;">
+			<div class="dwn-btns">
+				<a id="btn-dwn-excel" class="btn btn-primary toolt" data-placement="top" data-toggle="tooltip" data-original-title="Download Excel File" href="#" data-url="<?php echo e(URL::route($data['excel_download_link'])); ?>">Excel</a>
+				<a id="btn-dwn-pdf" class="btn btn-primary toolt" data-placement="top" data-toggle="tooltip" data-original-title="Download Pdf File" href="#" data-url="<?php echo e(URL::route($data['pdf_download_link'])); ?>">PDF</a>
+			</div>
+			<div style="display:none;" class="dwn-btns">
+				<button id="btn-rpt-pdf" class="btn btn-primary toolt" data-placement="top" data-toggle="tooltip" data-original-title="Download PDF" data-url="<?php echo e($data['report_download_link']); ?>">PDF</button>
+				<button id="btn-print-view" class="btn btn-primary toolt" data-placement="top" data-toggle="tooltip" data-original-title="Print">Print View</button>
+			</div>
+		</div>
+	<?php endif; ?>
+
+	<div class="clear"></div>
+	<div id="table-container">
+
+
+	<table id="record-table">
+		
+		<thead>
+			<?php foreach($data['fields'] as $field): ?>
+			    <th><?php echo e($data['labels'][$field]); ?> </th>
+			<?php endforeach; ?>
+
+			<th>Actions</th>
+		</thead>
+
+		<?php foreach($data['records'] as $record): ?>
+		
+			    <tr>
+
+			    	<?php foreach($data['fields'] as $field): ?>
+						    <td>
+						    	<?php echo e($record[$field]); ?>
+
+							</td>
+					<?php endforeach; ?>
+
+					<td data-id="<?php echo $record['id']; ?>">
+						<?php if(!$data['small_form']): ?>
+							<a class="action-icon" href="<?php echo e(URL::to($data['current_route_base'].'/'.$record['id'])); ?>"><img src="<?php echo asset('assets/images/viewreport.png'); ?>"></a>
+							<a class="action-icon" href="<?php echo e(URL::action($data['iec_link'],array('owner_type'=>$data['current_route_base'],'owner_id'=>$record['id']))); ?>"><img src="<?php echo asset('assets/images/folder-generic(1).png'); ?>"></a>
+						<?php endif; ?>
+						<a class="action-icon" href="<?php echo e(URL::to($data['current_route_base'].'/'.$record['id'].'/edit')); ?>"><img src="<?php echo asset('assets/images/edit-icon[1].png'); ?>"></a>
+						 <?php echo Form::open(array('url' => $data['current_route_base'].'/'. $record['id'], 'class' => 'pull-right','onsubmit'=>'return delete_popup(this);')); ?>
+
+		                    <?php echo Form::hidden('_method', 'DELETE'); ?>
+
+		                    <?php echo Form::submit('', array('class' => 'action-icon del-record')); ?>
+
+		                <?php echo Form::close(); ?>
+
+
+					</td>
+			    </tr>
+		
+		<?php endforeach; ?>
+
+		<tfoot>
+			<?php foreach($data['fields'] as $field): ?>
+			    <th><?php echo e($data['labels'][$field]); ?> </th>
+			<?php endforeach; ?>
+
+			<th></th>
+		</tfoot>
+
+	</table>
+	</div>
+	<div id="summaryTablesContainer">
+		<div id="summaryInnerContainer">
+
+		</div>
+	</div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+
+	<script type="text/javascript">
+
+		bind_file_download_excel();
+		$('.toolt').tooltip();
+		load_data_table(JSON.parse('<?php echo $data['report_data']; ?>',true));
+		
+	</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

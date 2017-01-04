@@ -1,0 +1,96 @@
+
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container" style="margin-left:-10px;width:100%;">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="margin-right:25px;" href="#" ><img  style="margin-left:10px;"src="<?php echo asset('assets/images/White.png'); ?>" alt="ATJ" height="48px" /></a>
+          </div>
+          <div class="navbar-collapse collapse" >
+            <ul class="nav navbar-nav">
+              <li><a href="index.php">Home</a></li>
+
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Forms<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="walkin_visitors.php">WalkIn Visitors</a></li>
+                  <li><a href="incomming_calls.php">Incomming Call Log</a></li>
+                  <li><a href="outgoing_calls.php">Outgoing Call Log</a></li>
+                  <li><a href="counselling_and_legal_advice.php">Counselling & Legal Advice</a></li>
+                  <li><a href="legal_assistance.php">Legal Assistance</a></li>
+                  <li><a href="court_cases.php">Court Cases</a></li>
+               </ul>
+              </li>
+
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<b class="caret"></b></a>
+                <ul class="dropdown-menu multi-level">
+                 <li><a href="reports.php">Center Wise Report</a></li>
+                 <li><a href="taf_report.php">Compartive Report</a></li>
+                 <li><a href="taf_report.php">Legal Aid Comparative Analysis</a></li>
+                 <li><a href="taf_report.php">DLAC Activity Trend Analysis</a></li>
+                </ul>
+              </li>
+              
+
+              <li class="dropdown">
+                <a href="iec_material.php" >IEC Material</a>
+              </li>
+              
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Management <b class="caret"></b></a>
+                      <ul class="dropdown-menu multi-level">
+                        <li class="dropdown-submenu"><a href="" tabindex="-1">Users Management </a>
+                           <ul class="dropdown-menu">
+                             <li><a href="admin.php">Admins</a></li>
+                             <li><a href="center_login_management.php">Centers</a></li>
+                          </ul>
+                        </li>
+
+                         <li class="dropdown-submenu"><a href="" tabindex="-1">Tables Management </a>
+                           <ul class="dropdown-menu">
+                             <li><a href="destricts.php">Project Destricts</a></li>
+                             <li><a href="tehsils.php">Province</a></li>
+                             <li><a href="centers.php">Dastageer Centers</a></li>
+                             <li><a href="parties.php">Parties/ Clients</a></li>
+                             <li><a href="center_staff.php">Center Staff</a></li>
+                             <li><a href="legal_aid_lawyers.php">Legal Aid Lawyers</a></li>
+                             <li><a href="support_organizations.php">Support Organizations</a></li>
+                             <li><a href="center_organization.php">Implementing Partners</a></li>
+                          </ul>
+                        </li>
+
+                         <li class="dropdown-submenu"><a href="" tabindex="-1">Supporting Tables</a>
+                           <ul class="dropdown-menu">
+                             <li><a href="pgroups.php">Priority Groups</a></li>
+                             <li><a href="mgroups.php">Minority Groups</a></li>
+                             <li><a href="case_natures.php">Case Natures</a></li>
+                             <li><a href="type_of_cases.php">Type of Cases</a></li>
+                             <li><a href="problem_natures.php">Problem Natures</a></li>
+                             <li><a href="case_referred_types.php">Case Referred Types</a></li>
+                             <li><a href="call_types.php">Call Types</a></li>
+                             <li><a href="action_types.php">Action Types</a></li>
+                             <li><a href="advice_types.php">Advice Types</a></li>
+                             <li><a href="visit_purposes.php">Visit Purposes</a></li>
+                             <li><a href="visit_types.php">Visit Types</a></li>
+                             <li><a href="center_reference.php">Center Reference</a></li>
+                             <li><a href="institution_types.php">Institution Types</a></li>
+
+                          </ul>
+                        </li>
+                        
+                      </ul>
+                    </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right" >
+              <li><a style="font-size:14px;" href="">Account</a></li>
+              <li><a style="font-size:14px;" href="">Log Out</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>  

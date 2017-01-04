@@ -1,0 +1,98 @@
+<?php $__env->startSection('content_options'); ?>
+
+	<div >
+		<div class="heading pull-left" ><h3> <?php echo e($data['heading']); ?><small style="font:16px;">&nbsp;&nbsp;&nbsp;(<?php echo date('F d, Y',strtotime(ProjectDate::find(1)->start)); ?>  -  <?php echo date('F d, Y',strtotime(ProjectDate::find(1)->end)); ?>) </small></h3></div>
+<a class="btn btn-default pull-right" href="<?php echo URL::to('/'); ?>">&laquo; Back to dashboard</a>
+	</div>
+	
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+	
+		
+	<div style="100%" id="graph" class="graph">
+		<div class="row">
+			<div style="width:100%" id="chart_container" class="placeholder col-md-10">
+			</div>
+		</div>
+	</div>
+
+	<div class="tab-content">
+	<table style="width:100%" id="report">
+	<thead>
+		<tr>
+			<?php foreach($data['records'] as $key=>$value): ?>
+			<th><?php echo trim(str_replace('DLAC','',$key)); ?></th>
+			<?php endforeach; ?>
+
+			<th>Total</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+		<?php foreach($data['records'] as $key=>$value): ?>
+			
+			<?php if(isset($data['aggregate'])): ?>
+			<td> <a href="<?php echo URL::to($data['aggregate_data'][$key]['route']); ?>#<?php echo $data['aggregate_data'][$key]['hash']; ?>"> <?php echo $value; ?> </a></td>	
+			<?php else: ?>
+			<td> <a href="<?php echo URL::to($data['index_route']); ?>#Center$<?php echo $key; ?>"> <?php echo $value; ?> </a></td>	
+			<?php endif; ?>
+		<?php endforeach; ?>
+
+		<td> <a href="<?php echo URL::to($data['index_route']); ?>"> <?php echo $data['total']; ?> </a></td>	
+		</tr>
+		
+	</tbody>
+	</table>
+	</div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+
+	<script type="text/javascript">
+		
+		 $('#chart_container').highcharts({
+            chart: {
+            	type: 'pie',
+	            options3d: {
+	                enabled: true,
+	                alpha: 45,
+	                beta: 0
+	            },
+	            
+               
+            },
+            title: {
+                text: 'Overview of Decentralized Data'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    depth:35,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                          style: {
+					        textShadow: ''
+					    }
+                    },
+                    showInLegend: true
+                }
+            },
+            legend: {
+		        labelFormat:'{name}: <b>{percentage:.1f}%</b>',
+
+		    },
+            series: [{
+                type: 'pie',
+                name: 'Decentralized <?php echo $data['heading']; ?> records',
+                data: JSON.parse('<?php echo $data['charts_data']; ?>',true)
+            }]
+        });
+
+	</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

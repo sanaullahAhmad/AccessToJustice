@@ -1,0 +1,30 @@
+<?php $__env->startSection('content_options'); ?>
+
+<div >
+	<div class="heading pull-left" ><h3>Add <?php echo e($data['heading']); ?> </h3></div>
+	<div class="pull-right" style="padding-top:15px;">
+
+		 <a href="<?php echo URL::route($data['go_back']); ?>" class="btn btn-primary" > Go Back</a>
+		 
+	</div>
+</div>
+
+<?php $__env->stopSection(); ?>
+	
+<?php $__env->startSection('content'); ?>
+	<table class="table">
+		<tbody>
+
+			<?php foreach($data['rows'] as $key=>$value): ?>
+				<tr>
+					<td> <?php echo $key; ?>	</td>
+					<td>  <?php echo $value; ?>  </td>
+				</tr>
+	
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+	
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

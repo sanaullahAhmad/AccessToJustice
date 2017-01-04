@@ -1,0 +1,379 @@
+<?php $__env->startSection('flash_messages'); ?>
+		<?php if(Session::has('message')): ?>
+		<p class="alert <?php echo Session::get('alert-class','alert-info'); ?>"> 
+			<?php if(is_array(Session::get('message'))): ?>
+				<?php foreach(Session::get('message') as $msg): ?>
+					<?php echo $msg; ?><br>
+				<?php endforeach; ?>
+			<?php else: ?>
+				<?php echo Session::get('message'); ?>
+
+			<?php endif; ?>
+		<?php endif; ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content_options'); ?>
+
+<div >
+	<div class="heading pull-left" ><h3>Add <?php echo e($data['heading']); ?> </h3></div>
+	
+	<div class="pull-right" style="padding-top:15px;">
+		<a href="<?php echo URL::route($data['go_back']); ?>" class="btn btn-primary" > Go Back</a>
+		<?php if($data['can_import']): ?>
+		<button class="btn btn-default" id="upload_excel">+ Upload File</button>
+		<?php endif; ?>
+	</div>
+	
+	<?php if($data['can_import']): ?>
+	<!-- file upload (import) Modal -->
+	<div class="modal fade" id="upload_modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="">Upload File to Import Data</h4>
+				</div>
+				<div class="modal-body">
+					<div style="height: 200px">
+
+						<form id="" action="<?php echo e(URL::route($data['upload_submit_url'])); ?>" method="post" enctype="multipart/form-data">
+							
+							<div class="alert alert-warning">
+							  <strong>Warning!</strong> Pleae note that the format of the date should be YYYY-MM-DD e.g.(2014-12-21)
+								Otherwise a default date will be entered.
+							</div>
+
+							<div class="form-group">
+								<label class="control-lable col-md-2">Center: </label>
+								<div class="col-md-10">
+									<select class="select" name="center_id" id="center">
+										<option value="">Select</option>  
+										<?php foreach($data['centers'] as $key=>$value): ?>
+										    <option value="<?php echo e($key); ?>"><?php echo e($value); ?></option>
+										<?php endforeach; ?>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-lable col-md-2">File: </label>
+								<div class="col-md-10">
+									<input type="file" name="file" class="input-sm col-sm-6"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-12">
+									<button type="submit" class="btn btn-info" id="file_upload_btn">Upload File</button>
+								</div>
+							</div>
+
+						</form>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div> 
+	<!-- modal ends here --> 
+
+	<?php endif; ?>
+
+</div>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+	
+	<form  action="<?php echo e(URL::route($data['submit_url'])); ?>" class="form-horizontal" role="form" method="post">
+
+		<?php foreach($data['elements_data'] as $key=>$element): ?>
+
+			<div class="form-group">
+				<label for="" class="col-sm-4 control-label"><?php echo $key; ?></label>
+				<div class="col-sm-3">
+	                
+					<?php if($element['tag'] === 'input'): ?>
+
+
+							<?php if($element['name']=='time'){ echo ' <div class="bootstrap-timepicker"> '; }?>
+
+	                	<input type="<?php  echo $element['type']; ?>"
+							   <?php if($element['name']=='contact'){ echo ' maxlength="12"   onkeypress="return isNumberKey(event);"    onkeydown="return isAddDashContact(this);"'; }?>
+							   <?php if($element['name']=='cnic'){ echo ' maxlength="15"   onkeypress="return isNumberKeyCnic(event);"    onkeydown="return isAddDashCnic(this);"'; }?>
+							   <?php //if($element['name']=='age'){ echo ' maxlength="3"   onkeypress="return isNumberKeyCnic(event);"'; }?>
+							   <?php if($element['name']=='occupation' || $element['name']=='address' || $element['name']=='tehsil' || $element['name']=='heard_from' || $element['name']=='case_nature_id'  || $element['name']=='action_taken' || $element['name']=='refer' || $element['name']=='call_taken_by')
+							   { echo '  onblur="return isAlphaOrParen(this);"'; }?>
+
+							   <?php if($element['name']=='name'){ echo ' onblur="toTitleCase(this)" '; }?>
+							   <?php if($element['name']=='time'){ echo ' id="timepicker5"  class="input-small" '; }?>
+							   toTitleCase
+							   class="form-control input-sm  <?php if($element['name']=='date'){ echo 'datepicker';}?>"
+							   value="<?php echo $element['value']; ?>" name="<?php echo e($element['name']); ?>" <?php if($element['name']=='date' || $element['name']=='time'){ echo 'readonly';}?> />
+
+								<?php if($element['name']=='time'){ echo ' <i class="icon-time"></i></div> '; }?>
+
+	            	<?php elseif($element['tag'] === 'select'): ?>
+					    <select class="col-sm-3 select" name="<?php echo e($element['name']); ?>" >
+					    	<?php foreach($element['options'] as $key=>$value): ?>
+					    		<option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+					    	<?php endforeach; ?>
+					    </select> 
+					 <?php endif; ?>
+	            </div>
+			</div>
+
+		<?php endforeach; ?>
+
+			<div class="form-group">
+				<label for="" class="col-sm-4 control-label"></label>
+				<div class="col-sm-3">
+					<input type="submit" value="Submit" class="btn btn-primary" name="sub"/>
+				</div>
+			</div>
+
+	</form>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+
+	<link href="<?php echo url(); ?>/assets/css/timepicker.less" type="text/css" rel="stylesheet">
+	<script src="<?php echo url(); ?>/assets/js/bootstrap-timepicker.js"></script>
+
+
+	<script type="text/javascript">
+		function isNumberKey(evt)
+		{
+			var charCode = (evt.which) ? evt.which : event.keyCode;
+			console.log(charCode);
+			if (charCode != 46 && charCode != 45 && charCode > 31
+					&& (charCode < 48 || charCode > 57))
+				return false;
+
+			return true;
+		}
+		function isNumberKeyCnic(evt)
+		{
+			var charCode = (evt.which) ? evt.which : event.keyCode;
+			console.log(charCode);
+			if (charCode != 46 && charCode != 45 && charCode > 31
+					&& (charCode < 48 || charCode > 57))
+				return false;
+
+			return true;
+		}
+		function toTitleCase(str)
+		{
+			var ress = str.value.toLowerCase().split(' ').map(i => i[0].toUpperCase() + i.substring(1)).join(' ');
+			//alert(ress);
+			str.value = ress;
+			isAlphaOrParen(str);
+		}
+		function isAddDashCnic(str)
+		{
+			if(str.value.length == 5 || str.value.length == 13)
+			 {
+				 str.value=str.value+'-';
+			 }
+		}
+		function isAddDashContact(str)
+		{
+			if(str.value.length == 4)
+			{
+				str.value=str.value+'-';
+			}
+		}
+
+		function isAlphaOrParen(inputtxt)
+		{
+			//var letters = /^[A-Za-z ]+$/;
+			var nums = /^[0-9]+$/;
+			var numsspace = /^[0-9 ]+$/;
+			if(inputtxt.value.match(nums))
+			{
+				inputtxt.value='';
+				return false;
+			}
+			else
+			{
+				if(inputtxt.value.match(numsspace))
+				{
+					inputtxt.value='';
+					return false;
+				}
+				else {
+					return true;
+				}
+			}
+		}
+
+		bind_file_upload_popup();
+		var today = new Date();
+		var lastDate = new Date(today.getFullYear(), today.getMonth(0)-1, 31);
+		$('.datepicker').datepicker({
+			format: 'yyyy-mm-dd'/*,
+			startDate: '-1m',
+			endDate: lastDate*/
+		});
+		$('#timepicker5').timepicker({
+			//showInputs: false,
+			minuteStep: 5,
+			//defaultTime:false,
+			showSeconds:true,
+			maxHours:24,
+			showMeridian:false
+		});
+	</script>
+<?php $__env->stopSection(); ?>
+<style type="text/css" id="less:bootstrap-timepicker-css-timepicker">/*!
+ * Timepicker Component for Twitter Bootstrap
+ *
+ * Copyright 2013 Joris de Wit
+ *
+ * Contributors https://github.com/jdewit/bootstrap-timepicker/graphs/contributors
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+	.bootstrap-timepicker {
+		position: relative;
+	}
+	.bootstrap-timepicker.pull-right .bootstrap-timepicker-widget.dropdown-menu {
+		left: auto;
+		right: 0;
+	}
+	.bootstrap-timepicker.pull-right .bootstrap-timepicker-widget.dropdown-menu:before {
+		left: auto;
+		right: 12px;
+	}
+	.bootstrap-timepicker.pull-right .bootstrap-timepicker-widget.dropdown-menu:after {
+		left: auto;
+		right: 13px;
+	}
+	.bootstrap-timepicker .input-group-addon {
+		cursor: pointer;
+	}
+	.bootstrap-timepicker .input-group-addon i {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+	}
+	.bootstrap-timepicker-widget.dropdown-menu {
+		padding: 4px;
+	}
+	.bootstrap-timepicker-widget.dropdown-menu.open {
+		display: inline-block;
+	}
+	.bootstrap-timepicker-widget.dropdown-menu:before {
+		border-bottom: 7px solid rgba(0, 0, 0, 0.2);
+		border-left: 7px solid transparent;
+		border-right: 7px solid transparent;
+		content: "";
+		display: inline-block;
+		position: absolute;
+	}
+	.bootstrap-timepicker-widget.dropdown-menu:after {
+		border-bottom: 6px solid #FFFFFF;
+		border-left: 6px solid transparent;
+		border-right: 6px solid transparent;
+		content: "";
+		display: inline-block;
+		position: absolute;
+	}
+	.bootstrap-timepicker-widget.timepicker-orient-left:before {
+		left: 6px;
+	}
+	.bootstrap-timepicker-widget.timepicker-orient-left:after {
+		left: 7px;
+	}
+	.bootstrap-timepicker-widget.timepicker-orient-right:before {
+		right: 6px;
+	}
+	.bootstrap-timepicker-widget.timepicker-orient-right:after {
+		right: 7px;
+	}
+	.bootstrap-timepicker-widget.timepicker-orient-top:before {
+		top: -7px;
+	}
+	.bootstrap-timepicker-widget.timepicker-orient-top:after {
+		top: -6px;
+	}
+	.bootstrap-timepicker-widget.timepicker-orient-bottom:before {
+		bottom: -7px;
+		border-bottom: 0;
+		border-top: 7px solid #999;
+	}
+	.bootstrap-timepicker-widget.timepicker-orient-bottom:after {
+		bottom: -6px;
+		border-bottom: 0;
+		border-top: 6px solid #ffffff;
+	}
+	.bootstrap-timepicker-widget a.btn,
+	.bootstrap-timepicker-widget input {
+		border-radius: 4px;
+	}
+	.bootstrap-timepicker-widget table {
+		width: 100%;
+		margin: 0;
+	}
+	.bootstrap-timepicker-widget table td {
+		text-align: center;
+		height: 30px;
+		margin: 0;
+		padding: 2px;
+	}
+	.bootstrap-timepicker-widget table td:not(.separator) {
+		min-width: 30px;
+	}
+	.bootstrap-timepicker-widget table td span {
+		width: 100%;
+	}
+	.bootstrap-timepicker-widget table td a {
+		border: 1px transparent solid;
+		width: 100%;
+		display: inline-block;
+		margin: 0;
+		padding: 8px 0;
+		outline: 0;
+		color: #333;
+	}
+	.bootstrap-timepicker-widget table td a:hover {
+		text-decoration: none;
+		background-color: #eee;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+		border-color: #ddd;
+	}
+	.bootstrap-timepicker-widget table td a i {
+		margin-top: 2px;
+		font-size: 18px;
+	}
+	.bootstrap-timepicker-widget table td input {
+		width: 25px;
+		margin: 0;
+		text-align: center;
+	}
+	.bootstrap-timepicker-widget .modal-content {
+		padding: 4px;
+	}
+	@media (min-width: 767px) {
+		.bootstrap-timepicker-widget.modal {
+			width: 200px;
+			margin-left: -100px;
+		}
+	}
+	@media (max-width: 767px) {
+		.bootstrap-timepicker {
+			width: 100%;
+		}
+		.bootstrap-timepicker .dropdown-menu {
+			width: 100%;
+		}
+	}
+</style>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

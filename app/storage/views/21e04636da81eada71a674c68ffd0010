@@ -1,0 +1,111 @@
+<?php $__env->startSection('flash_messages'); ?>
+<?php if(Session::has('message')): ?>
+<p class="alert <?php echo Session::get('alert-class', 'alert-info'); ?>"><?php echo Session::get('message'); ?></p>
+<?php endif; ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content_options'); ?>
+
+<div >
+	<div class="heading pull-left" ><h3> <?php echo e($data['owner_type']); ?> Files</h3></div>
+	<div class="pull-right" style="padding-top:15px;">
+		<button id="upload_file" class="btn btn-primary">Upload File</button>
+	</div>
+</div>
+</div>
+
+<!-- file upload (import) Modal -->
+<div class="modal fade" id="upload_modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="courtCasesFileUploadLabel">Upload File </h4>
+			</div>
+			<div class="modal-body">
+				<div style="height:150px">
+					<form id="import_form" action="" method="post" enctype="multipart/form-data">
+						<div class="form-group" style="height:40px">
+							<input type="hidden" name="owner_id" value="<?php echo $data['owner_id']; ?>">
+							<input type="hidden" name="owner_type" value="<?php echo $data['owner_type']; ?>">
+							<label class="control-lable col-md-2">Name: </label>
+							<div class="col-md-10">
+								<input type="text" id="title" name="name" class="input-sm col-sm-6"/>
+							</div>
+						</div>
+						<div class="form-group" style="height:40px">
+							<label class="control-lable col-md-2">File: </label>
+							<div class="col-md-10">
+								<input type="file" id="file" name="file" class="input-sm col-sm-6"/>
+							</div>
+						</div>
+						<div class="form-group" style="height:70px">
+							<label class="control-lable col-md-2">Comments: </label>
+							<div class="col-md-10">
+								<textarea type="text" name="comments" class="input-sm col-sm-6"/></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="" class="col-sm-4 control-label"></label>
+							<div class="col-sm-3">
+								
+								<input type="submit" value="Submit" class="btn btn-primary" name="sub">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div> 
+<!-- modal ends here -->
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+<table id="record-table">
+
+	<thead>
+		<?php foreach($data['table_headings'] as $heading): ?>
+		<th><?php echo e($heading); ?> </th>
+		<?php endforeach; ?>
+
+		<th>Actions</th>
+	</thead>
+
+	<?php foreach($data['records'] as $record): ?>
+
+	<tr>
+
+		<?php for($i = 0; $i < $data['records_count']; $i++): ?>
+		<td>
+			<?php echo e($record[$i]); ?>
+
+		</td>
+		<?php endfor; ?>
+
+		<td>
+			<a class="action-icon" href="<?php echo e(URL::to($data['download_link'],array('file_id'=>$record[0]))); ?>"><img src="<?php echo asset('assets/images/download.png'); ?>"></a>
+			<a class="action-icon del-record" href="<?php echo e(URL::to($data['delete_link'])); ?>"><img src="<?php echo asset('assets/images/delete-1-icon[1].png'); ?>"></a>
+		</td>
+
+	</tr>
+
+	<?php endforeach; ?>
+
+</table>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+
+<script type="text/javascript">
+
+$('#record-table').DataTable();
+bind_any_file_upload_popup();
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

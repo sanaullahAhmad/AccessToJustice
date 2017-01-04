@@ -1,0 +1,24 @@
+#easy_zoom{
+	width:600px;
+	height:450px;	
+	border:5px solid #eee;
+	background:#fff;
+	color:#333;
+	position:absolute;top: 180px;
+left: 210px;
+	overflow:hidden;
+	-moz-box-shadow:0 0 10px #555;
+	-webkit-box-shadow:0 0 10px #555;
+	box-shadow:0 0 10px #555;
+	/* vertical and horizontal alignment used for preloader text */
+	line-height:400px;
+	text-align:center;
+	}
+#summaryInnerContainer table
+{
+	/*width: 85% !important;*/
+	margin-left: 15px;
+}
+tr.odd td{
+	color: #green;
+}

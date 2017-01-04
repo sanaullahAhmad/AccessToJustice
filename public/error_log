@@ -1,0 +1,10 @@
+[05-Jan-2016 10:32:34 UTC] PHP Fatal error:  Class 'ZipArchive' not found in /home/inp/public_html/db/vendor/phpoffice/phpexcel/Classes/PHPExcel/Writer/Excel2007.php on line 227
+[14-Jan-2016 09:39:00 UTC] PHP Fatal error:  Class 'ZipArchive' not found in /home/inp/public_html/db/vendor/phpoffice/phpexcel/Classes/PHPExcel/Writer/Excel2007.php on line 227
+[14-Jan-2016 09:45:25 UTC] PHP Fatal error:  Class 'ZipArchive' not found in /home/inp/public_html/db/vendor/phpoffice/phpexcel/Classes/PHPExcel/Writer/Excel2007.php on line 227
+[14-Jan-2016 10:33:16 UTC] PHP Fatal error:  Class 'ZipArchive' not found in /home/inp/public_html/db/vendor/phpoffice/phpexcel/Classes/PHPExcel/Writer/Excel2007.php on line 227
+[14-Jan-2016 10:33:28 UTC] PHP Fatal error:  Class 'ZipArchive' not found in /home/inp/public_html/db/vendor/phpoffice/phpexcel/Classes/PHPExcel/Writer/Excel2007.php on line 227
+[14-Jan-2016 10:35:30 UTC] PHP Fatal error:  Class 'ZipArchive' not found in /home/inp/public_html/db/vendor/phpoffice/phpexcel/Classes/PHPExcel/Writer/Excel2007.php on line 227
+[14-Jan-2016 10:41:44 UTC] PHP Fatal error:  Class 'ZipArchive' not found in /home/inp/public_html/db/vendor/phpoffice/phpexcel/Classes/PHPExcel/Writer/Excel2007.php on line 227
+[14-Jan-2016 10:46:23 UTC] PHP Fatal error:  Class 'ZipArchive' not found in /home/inp/public_html/db/vendor/phpoffice/phpexcel/Classes/PHPExcel/Writer/Excel2007.php on line 227
+[14-Jan-2016 11:08:58 UTC] PHP Fatal error:  Class 'ZipArchive' not found in /home/inp/public_html/db/vendor/phpoffice/phpexcel/Classes/PHPExcel/Writer/Excel2007.php on line 227
+[15-Nov-2016 20:05:18 UTC] PHP Fatal error:  Call to a member function priority_group() on null in /home/inp/public_html/db/app/helpers.php on line 77

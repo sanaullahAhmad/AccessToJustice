@@ -1,0 +1,53 @@
+<?php $__env->startSection('flash_messages'); ?>
+		<?php if(Session::has('message')): ?>
+		<p class="alert <?php echo Session::get('alert-class','alert-info'); ?>"> 
+			<?php if(is_array(Session::get('message'))): ?>
+				<?php foreach(Session::get('message') as $msg): ?>
+					<?php echo $msg; ?><br>
+				<?php endforeach; ?>
+			<?php else: ?>
+				<?php echo Session::get('message'); ?>
+
+			<?php endif; ?>
+		<?php endif; ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content_options'); ?>
+
+<div >
+	<div class="heading pull-left" ><h3>Settings </h3></div>
+</div>
+
+<?php $__env->stopSection(); ?>
+	
+<?php $__env->startSection('content'); ?>
+	
+	<form  action="<?php echo e(URL::to('users/settings')); ?>" class="form-horizontal" role="form" method="post">
+
+
+			<div class="form-group">
+				<label for="" class="col-sm-4 control-label">New Password</label>
+				<div class="col-sm-3">
+					<input type="password" class="form-control input-sm" name="password"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="" class="col-sm-4 control-label">Retype New Password</label>
+				<div class="col-sm-3">
+					<input type="password" class="form-control input-sm" name="password_confirmation"/>
+				</div>
+			</div>
+
+	
+
+			<div class="form-group">
+				<label for="" class="col-sm-4 control-label"></label>
+				<div class="col-sm-3">
+					<input type="submit" value="Update" class="btn btn-primary" name="sub"/>
+				</div>
+			</div>
+
+	</form>
+	
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

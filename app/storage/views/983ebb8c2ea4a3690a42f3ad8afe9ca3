@@ -1,0 +1,87 @@
+<?php $__env->startSection('flash_messages'); ?>
+		<?php if(Session::has('message')): ?>
+		<p class="alert <?php echo Session::get('alert-class','alert-info'); ?>"> 
+			<?php if(is_array(Session::get('message'))): ?>
+				<?php foreach(Session::get('message') as $msg): ?>
+					<?php echo $msg; ?><br>
+				<?php endforeach; ?>
+			<?php else: ?>
+				<?php echo Session::get('message'); ?>
+
+			<?php endif; ?>
+		<?php endif; ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content_options'); ?>
+
+<div >
+	<div class="heading pull-left" ><h3>Edit <?php echo e($data['heading']); ?> </h3></div>
+	<div class="pull-right" style="padding-top:15px;">
+		<a href="<?php echo URL::route($data['go_back']); ?>" class="btn btn-primary" > Go Back</a>
+	</div>
+</div>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+	
+	<?php echo Form::open(
+					array(
+						'route' => array($data['submit_url'], $data['record_id']), 
+						'method' => 'PUT',
+						'class'=>"form-horizontal", 
+						'role'=>"form"
+						)
+				); ?>
+
+ 	
+		<?php foreach($data['elements_data'] as $key=>$element): ?>
+
+			<div class="form-group">
+				<label for="" class="col-sm-4 control-label"><?php echo $key; ?></label>
+				<div class="col-sm-3">
+	                
+					<?php if($element['tag'] === 'input'): ?>
+						<?php if($element['name']=='date'): ?>
+							<?php	$element['value']=date('Y-m-d',$element['value']);	?>
+						<?php endif; ?>
+						<?php if($element['value']==''): ?>
+							$element['value']='-';
+						<?php endif; ?>
+	                	<input type="<?php echo e($element['type']); ?>" class="form-control input-sm" name="<?php echo e($element['name']); ?>" value="<?php echo e($element['value']); ?>"/>
+	            	<?php elseif($element['tag'] === 'select'): ?>
+					    <select class="col-sm-3 select" name="<?php echo e($element['name']); ?>">
+					    	<?php foreach($element['options'] as $key=>$value): ?>
+					    		
+					    		<?php if(trim($element['value'])==''|| $element['value']=='-'): ?>
+					    		<option selected="selected" value="-"><?php echo $value; ?></option>
+					    		<?php elseif($key==$element['value']): ?>
+					    		<option selected="selected" value="<?php echo $key; ?>"><?php echo $value; ?></option>
+					    		<?php else: ?>
+					    		<option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+					    		<?php endif; ?>
+					    	<?php endforeach; ?>
+					    </select> 
+					<?php endif; ?>
+	            </div>
+			</div>
+
+		<?php endforeach; ?>
+
+			<div class="form-group">
+				<label for="" class="col-sm-4 control-label"></label>
+				<div class="col-sm-3">
+					<input type="submit" value="Submit" class="btn btn-primary" name="sub"/>
+				</div>
+			</div>
+
+	</form>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+
+	<script type="text/javascript">
+
+		bind_file_upload_popup();
+	</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
